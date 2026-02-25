@@ -1,11 +1,10 @@
 import axios from "axios";
 
 export async function fetchKlines(symbol) {
-  const url = `https://fapi.binance.com/fapi/v1/klines?symbol=${symbol}&interval=1h&limit=200`;
+  const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1h&limit=100`;
 
-  const response = await axios.get(url, {
-    headers: { "User-Agent": "Mozilla/5.0" }
-  });
+  const response = await fetch(url);
+  const data = await response.json();
 
-  return response.data;
+  return data;
 }
