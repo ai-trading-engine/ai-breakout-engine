@@ -1,10 +1,19 @@
-import axios from "axios";
-
 export async function fetchKlines(symbol) {
-  const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1h&limit=100`;
+  try {
+    const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1h&limit=100`;
 
-  const response = await fetch(url);
-  const data = await response.json();
+    const response = await fetch(url);
 
-  return data;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+
+  } catch (error) {
+    console.error(`Error fetching ${symbol}:`, error.message);
+    return null;
+  }
 }
